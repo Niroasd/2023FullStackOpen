@@ -1,5 +1,15 @@
 import { useState } from 'react'
 
+const Buttons = ({handleGoodClick, handleNeutralClick, handleBadClick}) => {
+  return(
+    <div>
+      <Button handleClick={handleGoodClick} text={'good'}/>
+      <Button handleClick={handleNeutralClick} text={'neutral'}/>
+      <Button handleClick={handleBadClick} text={'bad'}/>
+    </div>
+  )
+}
+
 const Button = ({handleClick, text}) => {
   return(
     <button onClick={handleClick}>{text}</button>
@@ -7,23 +17,34 @@ const Button = ({handleClick, text}) => {
 }
 
 const Statistics = ({ good, neutral, bad, total }) => {
+  if(total === 0){
+    return(
+      <div>
+        <p>
+          No feedback given
+        </p>
+      </div>
+    )
+  }
   return(
     <div>
-      <Display text={'good:'} data={good} />
-      <Display text={'neutral:'} data={neutral} />
-      <Display text={'bad:'} data={bad} />
-      <Display text={'total:'} data={total} />
-      <Display text={'average:'} data={((good - bad) / total)} />
-      <DisplayPercentage text={'positive:'} data={(good/total) * 100} />
+      <table>
+          <Display text={'good:'} data={good} />
+          <Display text={'neutral:'} data={neutral} />
+          <Display text={'bad:'} data={bad} />
+          <Display text={'total:'} data={total} />
+          <Display text={'average:'} data={((good - bad) / total)} />
+          <DisplayPercentage text={'positive:'} data={(good/total) * 100} />
+      </table>
     </div>
   )
 }
 
 const Display = ({text, data}) => {
   return(
-    <div>
+    <tr>
       {text} {data}
-      </div>
+    </tr>
   )}
 
 const DisplayPercentage = ({text, data}) => <div>{text} {data} %</div>
@@ -50,9 +71,7 @@ const App = () => {
   return(
     <div>
       <h1>give feedback</h1>
-      <Button handleClick={handleGoodClick} text={'good'}/>
-      <Button handleClick={handleNeutralClick} text={'neutral'}/>
-      <Button handleClick={handleBadClick} text={'bad'}/>
+      <Buttons handleGoodClick={handleGoodClick} handleNeutralClick={handleNeutralClick} handleBadClick={handleBadClick}/>
       <h1>statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad} total={total}/>
     </div>
