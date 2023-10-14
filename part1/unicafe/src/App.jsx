@@ -6,7 +6,26 @@ const Button = ({handleClick, text}) => {
   )
 }
 
-const Display = ({text, data}) => <div>{text} {data}</div>
+const Statistics = ({ good, neutral, bad, total }) => {
+  return(
+    <div>
+      <Display text={'good:'} data={good} />
+      <Display text={'neutral:'} data={neutral} />
+      <Display text={'bad:'} data={bad} />
+      <Display text={'total:'} data={total} />
+      <Display text={'average:'} data={((good - bad) / total)} />
+      <DisplayPercentage text={'positive:'} data={(good/total) * 100} />
+    </div>
+  )
+}
+
+const Display = ({text, data}) => {
+  return(
+    <div>
+      {text} {data}
+      </div>
+  )}
+
 const DisplayPercentage = ({text, data}) => <div>{text} {data} %</div>
 
 const App = () => {
@@ -35,12 +54,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text={'neutral'}/>
       <Button handleClick={handleBadClick} text={'bad'}/>
       <h1>statistics</h1>
-      <Display text={'good:'} data={good} />
-      <Display text={'neutral:'} data={neutral} />
-      <Display text={'bad:'} data={bad} />
-      <Display text={'total:'} data={total} />
-      <Display text={'average:'} data={((good - bad) / total)} />
-      <DisplayPercentage text={'positive:'} data={(good/total) * 100} />
+      <Statistics good={good} neutral={neutral} bad={bad} total={total}/>
     </div>
   )
 }
