@@ -29,12 +29,14 @@ const Statistics = ({ good, neutral, bad, total }) => {
   return(
     <div>
       <table>
+        <tbody>
           <Display text={'good:'} data={good} />
           <Display text={'neutral:'} data={neutral} />
           <Display text={'bad:'} data={bad} />
           <Display text={'total:'} data={total} />
           <Display text={'average:'} data={((good - bad) / total)} />
           <DisplayPercentage text={'positive:'} data={(good/total) * 100} />
+        </tbody>
       </table>
     </div>
   )
@@ -43,11 +45,13 @@ const Statistics = ({ good, neutral, bad, total }) => {
 const Display = ({text, data}) => {
   return(
     <tr>
+      <td>
       {text} {data}
+      </td>
     </tr>
   )}
 
-const DisplayPercentage = ({text, data}) => <div>{text} {data} %</div>
+const DisplayPercentage = ({text, data}) =>     <tr><td>{text} {data} %</td></tr>
 
 const App = () => {
   const [good, setGood] = useState(0)
