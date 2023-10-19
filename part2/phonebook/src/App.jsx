@@ -1,9 +1,7 @@
 import { useState } from 'react'
 
 const Person = ({persons}) => {
-
   const personList = persons.map(person => <p key={person.name}>{person.name}</p>)
-
   return(
     <div>
       {personList}
@@ -21,13 +19,25 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+
+
   const addName = (event) => {
+    const nameList = persons.map(person => {
+      return person.name
+    })
+
     event.preventDefault()
     const personObject = {
       name : newName
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
+
+    if(!nameList.includes(newName)){
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    } 
+    else {
+      alert(`${newName} is already added to phonebook.`)
+    }
   }
 
   return (
