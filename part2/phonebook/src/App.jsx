@@ -17,7 +17,6 @@ const App = () => {
       .then(response => {
         setPersons(response.data)
       })
-      
     },[])
 
   const handleSearchInputChange = (event) => {
@@ -41,11 +40,16 @@ const App = () => {
     const personObject = {
       name : newName,
       number : newNumber,
-      id : persons.length + 1
     }
 
     if(!nameList.includes(newName)){
-      setPersons(persons.concat(personObject))
+      useEffect(() => {
+        axios
+          .post('http://localhost:3001/persons', personObject)
+          .then(response => setPersons(persons.concat(response.data)))
+      })
+
+      // setPersons(persons.concat(personObject))
       setNewName('')
       setNewNumber('')
     } 
