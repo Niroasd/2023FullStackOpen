@@ -15,9 +15,12 @@ const App = () => {
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
+        console.log(response);
         setPersons(response.data)
       })
     },[])
+
+
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase())
@@ -43,16 +46,14 @@ const App = () => {
     }
 
     if(!nameList.includes(newName)){
-      useEffect(() => {
         axios
           .post('http://localhost:3001/persons', personObject)
+          .then(() => console.log(response.data))
           .then(response => setPersons(persons.concat(response.data)))
-      })
-
-      // setPersons(persons.concat(personObject))
+      setPersons(persons.concat(personObject))
       setNewName('')
       setNewNumber('')
-    } 
+    }
     else {
       alert(`${newName} is already added to phonebook.`)
     }
@@ -66,9 +67,9 @@ const App = () => {
       <Personform addPerson={addPerson} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} newName={newName} newNumber={newNumber}/>
       <h2>Numbers</h2>
       <Persons persons={persons} searchTerm={searchTerm}/>
-      {/* <div>debug name: {newName}</div>
+      <div>debug name: {newName}</div>
       <div>debug number: {newNumber}</div>
-      <div>debug search: {searchTerm}</div> */}
+      <div>debug search: {searchTerm}</div>
     </div>
   )
 }
