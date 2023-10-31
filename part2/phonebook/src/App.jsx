@@ -48,9 +48,9 @@ const App = () => {
     if(!nameList.includes(newName)){
         axios
           .post('http://localhost:3001/persons', personObject)
-          .then(() => console.log(response.data))
+          .then(response => console.log(response.data))
           .then(response => setPersons(persons.concat(response.data)))
-      setPersons(persons.concat(personObject))
+      // setPersons(persons.concat(personObject))
       setNewName('')
       setNewNumber('')
     }
