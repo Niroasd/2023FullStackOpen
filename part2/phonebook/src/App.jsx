@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Persons from './components/Persons'
 import Personform from './components/Personform'
 import Filter from './components/Filter'
-import axios from 'axios'
+import personService from './services/persons'
+// import axios from 'axios'
 
 
 const App = () => {
@@ -12,11 +13,11 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         console.log(response);
-        setPersons(response.data)
+        setPersons(response)
       })
     },[])
 
@@ -46,10 +47,12 @@ const App = () => {
     }
 
     if(!nameList.includes(newName)){
-        axios
-          .post('http://localhost:3001/persons', personObject)
-          .then(response => console.log(response.data))
-          .then(response => setPersons(persons.concat(response.data)))
+        personService
+          .addUser(personObject)
+          .then((response) => {
+            console.log(response)
+            setPersons(persons.concat(response))
+          })
       // setPersons(persons.concat(personObject))
       setNewName('')
       setNewNumber('')
