@@ -21,8 +21,6 @@ const App = () => {
       })
     },[])
 
-
-
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase())
   }
@@ -53,12 +51,22 @@ const App = () => {
             console.log(response)
             setPersons(persons.concat(response))
           })
-      // setPersons(persons.concat(personObject))
       setNewName('')
       setNewNumber('')
     }
     else {
       alert(`${newName} is already added to phonebook.`)
+    }
+  }
+
+  const deletePerson = (id, userName) => {
+    if(window.confirm(`Delete ${userName}?`)){
+      personService
+      .deleteUser(id)
+      .then((response) => {
+        console.log(response)
+        setPersons(persons.filter(person => person.id !== id));
+      })
     }
   }
 
@@ -69,7 +77,7 @@ const App = () => {
       <h2>Add a person</h2>
       <Personform addPerson={addPerson} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} newName={newName} newNumber={newNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={persons} searchTerm={searchTerm}/>
+      <Persons persons={persons} searchTerm={searchTerm} deletePerson={deletePerson}/>
       <div>debug name: {newName}</div>
       <div>debug number: {newNumber}</div>
       <div>debug search: {searchTerm}</div>

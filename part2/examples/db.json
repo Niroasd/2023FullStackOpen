@@ -17,7 +17,7 @@
     },
     {
       "content": "haloo kuuluuks tää",
-      "important": false,
+      "important": true,
       "id": 4
     },
     {
@@ -32,7 +32,7 @@
     },
     {
       "content": "payload",
-      "important": true,
+      "important": false,
       "id": 7
     },
     {
