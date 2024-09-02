@@ -3,7 +3,6 @@ import Persons from './components/Persons'
 import Personform from './components/Personform'
 import Filter from './components/Filter'
 import personService from './services/persons'
-// import axios from 'axios'
 
 
 const App = () => {
