@@ -18,7 +18,7 @@ const App = () => {
         console.log(response);
         setPersons(response)
       })
-    },[])
+  }, [])
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase())
@@ -39,44 +39,59 @@ const App = () => {
 
     event.preventDefault()
     const personObject = {
-      name : newName,
-      number : newNumber,
+      name: newName,
+      number: newNumber,
     }
 
-    if(!nameList.includes(newName)){
-        personService
-          .addUser(personObject)
-          .then((response) => {
-            console.log(response)
-            setPersons(persons.concat(response))
-          })
+    if (!nameList.includes(newName)) {
+      personService
+        .addUser(personObject)
+        .then((response) => {
+          console.log(response)
+          setPersons(persons.concat(response))
+        })
       setNewName('')
       setNewNumber('')
-    }
-    else {
-      alert(`${newName} is already added to phonebook.`)
+    } else {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)) {
+
+        const foundPerson = persons.find(person => person.name === newName)
+        const foundID = foundPerson.id
+
+        personService
+          .updateUser(foundID, personObject)
+          .then((response) => {
+            console.log(response)
+            setPersons(persons.map(person => 
+              person.id !== foundID ? person : response
+            ));
+          })
+        setNewName('')
+        setNewNumber('')
+      }
     }
   }
 
   const deletePerson = (id, userName) => {
-    if(window.confirm(`Delete ${userName}?`)){
+    if (window.confirm(`Delete ${userName}?`)) {
+      setPersons(persons.filter(person => person.id !== id));
+
       personService
-      .deleteUser(id)
-      .then((response) => {
-        console.log(response)
-        setPersons(persons.filter(person => person.id !== id));
-      })
+        .deleteUser(id)
+        .then((response) => {
+          console.log(response)
+        })
     }
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter handleSearchInputChange={handleSearchInputChange} searchTerm={searchTerm}/>
+      <Filter handleSearchInputChange={handleSearchInputChange} searchTerm={searchTerm} />
       <h2>Add a person</h2>
-      <Personform addPerson={addPerson} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} newName={newName} newNumber={newNumber}/>
+      <Personform addPerson={addPerson} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} newName={newName} newNumber={newNumber} />
       <h2>Numbers</h2>
-      <Persons persons={persons} searchTerm={searchTerm} deletePerson={deletePerson}/>
+      <Persons persons={persons} searchTerm={searchTerm} deletePerson={deletePerson} />
       <div>debug name: {newName}</div>
       <div>debug number: {newNumber}</div>
       <div>debug search: {searchTerm}</div>
