@@ -3,6 +3,7 @@ import axios from 'axios'
 import Note from './components/Note'
 import noteService from './services/notes'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -87,6 +88,7 @@ const App = () => {
           
         <button type='submit'>save</button>
       </form>
+      <Footer />
     </div>
   )
 }
