@@ -74,6 +74,15 @@ const App = () => {
               person.id !== foundID ? person : response
             ));
           })
+          .catch((error) => {
+            setErrorMessage(`Information of ${newName} has already been removed from the server.`)
+            personService
+              .getAll()
+              .then(response => {
+                console.log(response);
+                setPersons(response)
+              })
+          })
 
         setErrorMessage(`Updated ${newName}`)
         setTimeout(() => {
