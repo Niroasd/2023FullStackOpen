@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <Filter searchText={searchText} handleSearchChange={handleSearchChange} />
-      <Country countries={countries} searchText={searchText}/>
+      <Country countries={countries} searchText={searchText} setSearchText={setSearchText}/>
     </>
   )
 }

@@ -1,10 +1,11 @@
-const Country = ({ countries, searchText }) => {
+const Country = ({ countries, searchText, setSearchText }) => {
     const filteredList = countries.filter(country => country.name.common.toLowerCase().includes(searchText))
     const filteredCountryList = filteredList.map(country =>
         <li key={country.name.common}>
             {country.name.common}
+            <button onClick={() => setSearchText(country.name.common.toLowerCase())}>show</button>
         </li>)
-        
+
     const filteredCountrySingle = filteredList.map(country =>
         <li key={country.name.common}>
             <h1> {country.name.common} </h1>
