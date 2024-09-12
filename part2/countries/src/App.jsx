@@ -6,7 +6,8 @@ import Country from './components/Country'
 function App() {
   const [countries, setCountries] = useState(null)
   const [searchText, setSearchText] = useState('')
-
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const apiKey = import.meta.env.VITE_SOME_KEY
 
   useEffect(() => {
     axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -27,7 +28,7 @@ function App() {
   return (
     <>
       <Filter searchText={searchText} handleSearchChange={handleSearchChange} />
-      <Country countries={countries} searchText={searchText} setSearchText={setSearchText}/>
+      <Country countries={countries} searchText={searchText} setSearchText={setSearchText} apiKey={apiKey} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry}/>
     </>
   )
 }
