@@ -1,43 +1,39 @@
 import axios from "axios"
+import { useEffect } from "react"
+import Single from "./Single"
 
-const Country = ({ countries, searchText, setSearchText, selectedCountry, setSelectedCountry, apiKey }) => {
+const Country = ({ countries, searchText, setSearchText, selectedCountry, setSelectedCountry, weather, apiKey, setWeather }) => {
     const filteredList = countries.filter(country => country.name.common.toLowerCase().includes(searchText))
+
     const filteredCountryList = filteredList.map(country =>
         <li key={country.name.common}>
             {country.name.common}
-            <button onClick={() => clickHandler(country.name.common.toLowerCase())}>show</button>
+            <button onClick={() => setSearchText(country.name.common.toLowerCase())}>show</button>
         </li>)
 
+    useEffect(() => {
+        if (searchText.length > 0) {
+            // console.log(searchText.length);
+            const lon = filteredList[0].capitalInfo.latlng[1]
+            const lat = filteredList[0].capitalInfo.latlng[0]
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+                .then(response => {
+                    setWeather(response.data)
+                    console.log(response.data);
+                })
+        }
+    }, [selectedCountry])
 
-    const clickHandler = (name) => {
-        setSearchText(name)
-        setSelectedCountry(name)
-    }
-
-
-    const filteredCountrySingle = filteredList.map(country =>
-        <li key={country.name.common}>
-            <h1> {country.name.common} </h1>
-            <div>Capital {country.capital}</div>
-            <div>Area {country.area}</div>
-            <h4>languages:</h4>
-            <ul>
-                {filteredCountryList.length == 1 ?
-                    Object.values(country.languages).map(lang =>
-                        <li key={lang}>{lang}</li>
-                    )
-                    : null
-                }
-            </ul>
-            <img src={country.flags.png}></img>
-            <h3>Weather in {country.name.common}</h3>
-        </li>)
-
+    useEffect(() => {
+        if (filteredList.length === 1 && filteredList[0].name.common !== selectedCountry) {
+            setSelectedCountry(filteredList[0].name.common);
+        }
+    }, [filteredList]);
 
     if (filteredCountryList.length == 1) {
         return (
             <div>
-                {filteredCountrySingle}
+                <Single filteredList={filteredList} weather={weather} />
             </div>
         )
     }
