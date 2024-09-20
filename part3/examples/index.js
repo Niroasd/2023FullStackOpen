@@ -13,6 +13,8 @@ morgan.token('post-body', function getContents(req) {
     return JSON.stringify(req.body)
 })
 
+app.use(express.static('dist'))
+
 let notes = [
     {
         id: "1",
