@@ -7,9 +7,15 @@ app.use(morgan(':method :url :response-time :status :post-body', {
     skip: function (req, res) { return req.method !== 'POST' }
 }))
 
-morgan.token('post-body', function getContents (req) {
+morgan.token('post-body', function getContents(req) {
     return JSON.stringify(req.body)
-  })
+})
+
+const cors = require('cors')
+
+app.use(cors())
+
+app.use(express.static('dist'))
 
 let data = [
     {
