@@ -28,7 +28,7 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
-    mongoose.findById(id).then(person => {
+    Person.findById(id).then(person => {
         response.json(person)
     })
         .catch(error => next(error))
