@@ -1,0 +1,11 @@
+GET http://localhost:3001/api/persons/
+
+###
+
+DELETE http://localhost:3001/api/persons/678fdbd56d73fb46a5c9833a HTTP/1.1
+content-type: application/json
+
+{
+    "name": "kuuleeko mongo",
+    "number": "123456789"
+}
