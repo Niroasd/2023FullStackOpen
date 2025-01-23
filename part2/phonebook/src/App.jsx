@@ -51,12 +51,15 @@ const App = () => {
         .then((response) => {
           console.log(response)
           setPersons(persons.concat(response))
+          setErrorMessage(`Added ${newName}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000);
         })
-
-      setErrorMessage(`Added ${newName}`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000);
+        .catch(error => {
+          console.log(error.response.data.error);
+          setErrorMessage(error.response.data.error)
+        })
 
       setNewName('')
       setNewNumber('')
