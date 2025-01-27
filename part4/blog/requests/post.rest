@@ -6,7 +6,7 @@ POST http://localhost:3003/api/blogs/ HTTP/1.1
 content-type: application/json
 
 {
-  "title": "one piece is real or is it though",
+  "title": "jee jee toimii",
   "author": "jane doe maybe who knows",
   "url": "testurl.com",
   "likes": 2
