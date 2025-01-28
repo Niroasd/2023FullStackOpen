@@ -6,7 +6,7 @@ POST http://localhost:3003/api/blogs/ HTTP/1.1
 content-type: application/json
 
 {
-  "title": "haloo kuuleeko parser",
+  "title": "4.2 is done yay",
   "author": "jane doe maybe who knows",
   "url": "testurl.com",
   "likes": 2
