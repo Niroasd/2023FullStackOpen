@@ -27,6 +27,28 @@ const mostBlogs = (blogs) => {
   }
 }
 
+const mostLikes = (blogs) => {
+
+  const temp = _.groupBy(blogs, 'author');
+  console.log(temp);
+
+
+  /* note to self: 
+  this one took way too long lol
+  next time use unique variable names dummy */
+  const likes = _.map(temp, (authorsBlogs, author) => ({
+    author,
+    totalLikes: _.sumBy(authorsBlogs, 'likes')
+  }));
+  console.log(likes);
+
+
+  const highest = _.maxBy(likes, 'totalLikes');
+  console.log(highest);
+
+  return highest;
+};
+
 
 const listWithMultipleBlogs = [
   {
@@ -88,8 +110,8 @@ const listWithMultipleBlogs = [
 ]
 
 // favoriteBlog(listWithMultipleBlogs)
-mostBlogs(listWithMultipleBlogs)
+// mostLikes(listWithMultipleBlogs)
 
 module.exports = {
-  dummy, totalLikes, favoriteBlog, mostBlogs
+  dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes
 }
