@@ -27,12 +27,17 @@ beforeEach(async () => {
   await Promise.all(promiseArr)
 })
 
-describe('4.8 tests under this', () => {
-test('api returns correct amount of blogs', async () => {
-  const response = await api.get('/api/blogs')
-  assert.strictEqual(response.body.length, 2)
-})
-test('blogs return in json format', async () => {
-  await api.get('/api/blogs').expect('Content-Type', /application\/json/)
-})
+describe('4.8-4.12 tests under this', () => {
+  test('api returns correct amount of blogs', async () => {
+    const response = await api.get('/api/blogs')
+    assert.strictEqual(response.body.length, 2)
+  })
+  test('blogs return in json format', async () => {
+    await api.get('/api/blogs').expect('Content-Type', /application\/json/)
+  })
+  test('blog[id] instead of blog[__id]', async () => {
+    const response = await api.get('/api/blogs')
+    // console.log(response.body);
+    assert.strictEqual(response.body.map(blog => blog.id).length, 2)
+  })
 })
