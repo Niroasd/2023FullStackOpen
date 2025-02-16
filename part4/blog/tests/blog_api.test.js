@@ -69,9 +69,25 @@ describe('4.8-4.12 tests under this', () => {
       .post('/api/blogs')
       .send(newBlogNoLike)
       .expect(201)
-    console.log(`object >> ${JSON.stringify(response.body)}`);
-    console.log(`likes >> ${response.body.likes}`);
+    // console.log(`object >> ${JSON.stringify(response.body)}`);
+    // console.log(`likes >> ${response.body.likes}`);
 
     assert.strictEqual(response.body.likes, 0)
+  })
+  test('title or url missing returns 400', async () => {
+    const newBlogNoTitle =
+    {
+      "author": "hope this works",
+      "url": "woo",
+    }
+    const newBlogNoUrl =
+    {
+      "title": "4.12 do you copy?",
+      "author": "hope this works",
+    }
+
+    await api.post('/api/blogs').send(newBlogNoTitle).expect(400)
+    await api.post('/api/blogs').send(newBlogNoUrl).expect(400)
+    
   })
 })

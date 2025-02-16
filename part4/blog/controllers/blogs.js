@@ -7,7 +7,10 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.post('/', async (request, response) => {
-    console.log('Incoming request body:', request.body);
+    // console.log('Incoming request body:', request.body);
+    if (!request.body.title || !request.body.url) {
+        return response.status(400).json({ error: 'Title and URL needed' })
+    }
     const blog = new Blog(request.body)
     const savedBlog = await blog.save()
     response.status(201).json(savedBlog)
