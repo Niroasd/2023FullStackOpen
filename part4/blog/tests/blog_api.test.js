@@ -88,6 +88,17 @@ describe('4.8-4.12 tests under this', () => {
 
     await api.post('/api/blogs').send(newBlogNoTitle).expect(400)
     await api.post('/api/blogs').send(newBlogNoUrl).expect(400)
-    
+
+  })
+  test('deletion returns 204', async () => {
+    const blogsAtStart = await Blog.find({})
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const len = await Blog.find({})
+    assert.strictEqual(len.length, initialBlogs.length - 1)
   })
 })
