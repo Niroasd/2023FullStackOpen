@@ -42,23 +42,36 @@ describe('4.8-4.12 tests under this', () => {
   })
   test('posting increments by one', async () => {
 
-    const newblog = 
-      {
-        "title": "4.10 do you copy?",
-        "author": "hope this works",
-        "url": "woo",
-        "likes": 999
-      }
-    
-    console.log(`and here we have ${JSON.stringify(newblog)}`);
-    
+    const newblog =
+    {
+      "title": "4.10 do you copy?",
+      "author": "hope this works",
+      "url": "woo",
+      "likes": 999
+    }
+    // console.log(`and here we have ${JSON.stringify(newblog)}`);
     const response = await api
       .post('/api/blogs')
       .send(newblog)
-    console.log(response.body);
-    
-    const blogAmount = await(Blog.find({}))
-    console.log(blogAmount.length, initialBlogs.length);
+    // console.log(response.body);
+    const blogAmount = await (Blog.find({}))
+    // console.log(blogAmount.length, initialBlogs.length);
     assert.strictEqual(blogAmount.length, initialBlogs.length + 1)
+  })
+  test('default likes is 0', async () => {
+    const newBlogNoLike =
+    {
+      "title": "4.10 do you copy?",
+      "author": "hope this works",
+      "url": "woo",
+    }
+    const response = await api
+      .post('/api/blogs')
+      .send(newBlogNoLike)
+      .expect(201)
+    console.log(`object >> ${JSON.stringify(response.body)}`);
+    console.log(`likes >> ${response.body.likes}`);
+
+    assert.strictEqual(response.body.likes, 0)
   })
 })
