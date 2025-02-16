@@ -40,4 +40,19 @@ describe('4.8-4.12 tests under this', () => {
     // console.log(response.body);
     assert.strictEqual(response.body.map(blog => blog.id).length, 2)
   })
+  test('posting increments by one', async () => {
+
+    const newblog = new Blog(
+      {
+        "title": "4.10 do you copy?",
+        "author": "hope this works",
+        "url": "woo",
+        "likes": 999
+      }
+    )
+    await api.post('/api/blogs', newblog)
+    const blogAmount = await(Blog.find({}))
+    console.log(blogAmount.length, initialBlogs.length);
+    assert.strictEqual(blogAmount.length, initialBlogs.length + 1)
+  })
 })
