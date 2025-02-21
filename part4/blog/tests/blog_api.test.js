@@ -1,5 +1,6 @@
-const { test, describe, beforeEach } = require('node:test')
+const { test, after, describe, beforeEach } = require('node:test')
 const assert = require('node:assert')
+const mongoose = require('mongoose')
 const Blog = require('../models/blog')
 const supertest = require('supertest')
 const app = require('../app')
@@ -98,7 +99,24 @@ describe('4.8-4.12 tests under this', () => {
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(204)
 
-    const len = await Blog.find({})
-    assert.strictEqual(len.length, initialBlogs.length - 1)
+    const blogs = await Blog.find({})
+    assert.strictEqual(blogs.length, initialBlogs.length - 1)
   })
+  test('updated blog has new likes', async () => {
+    const blogsAtStart = await Blog.find({})
+    const blogToUpdate = blogsAtStart[0]
+
+    const likeUpdate = {
+      "likes": 214786111
+    }
+
+    const response = await api.put(`/api/blogs/${blogToUpdate.id}`).send(likeUpdate).expect(201)
+    // console.log(`old >> ${response.body.likes}`);
+    // console.log(`new >> ${likeUpdate.likes}`);
+    assert.strictEqual(response.body.likes, likeUpdate.likes)
+  })
+})
+
+after(async () => {
+  await mongoose.connection.close()
 })
