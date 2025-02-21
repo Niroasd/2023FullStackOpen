@@ -6,6 +6,7 @@ POST http://localhost:3001/api/notes/ HTTP/1.1
 content-type: application/json
 
 {
-    "content": "dummy data",
-    "important": true
+    "content": "jee hyvin toimii",
+    "important": true,
+    "userId": "67b852b1e344e1efd61441b8"
 }
